@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ScanBLE.MainPage">
+
+    <Grid RowDefinitions="Auto, *, Auto" Padding="20" ColumnSpacing="20">
+
+        <!-- 標題 -->
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto">
+            <Label Grid.Column="0" Text="A2TB BLE Scanner" FontSize="24" FontAttributes="Bold" VerticalOptions="Center"/>
+            <!-- 公司icon-->
+            <Image Grid.Column="1" Source="actionstar.png" WidthRequest="90" VerticalOptions="Start" Aspect="AspectFit" Margin="0,0,-10,0"/>
+        </Grid>
+
+        <!-- 設備列表-->
+        <CollectionView Grid.Row="1" x:Name="DevicesCollectionView" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <!-- 每顆裝置顯示的卡片樣式 -->
+                    <Frame BorderColor="LightGray" CornerRadius="10" Padding="15" Margin="0,0,0,10">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDeviceTapped" CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+
+                        <Grid>
+                            <!-- 正常顯示區塊 (沒有被隱藏時才顯示) -->
+                            <Grid IsVisible="{Binding IsNotMuted}" ColumnDefinitions="*, 80" ColumnSpacing="10">
+
+                                <VerticalStackLayout Grid.Column="0" Spacing="5">
+
+                                    <!-- 精簡資訊 (ID 與 秒數) -->
+                                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*,Auto" RowSpacing="5" ColumnSpacing="5">
+
+                                        <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Spacing="5" VerticalOptions="Center">
+                                            <Label Text="ID:  " TextColor="Gray" VerticalOptions="Center"/>
+                                            <Label Text="{Binding DeviceId}" FontAttributes="Bold" FontSize="22" VerticalOptions="Center" TextColor="#007ACC"/>
+                                        </HorizontalStackLayout>
+
+                                        <Label Grid.Row="1" Grid.Column="0" Text="Timestamp:" TextColor="Gray" VerticalOptions="Center"/>
+                                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding ElapsedTimeText}" FontAttributes="Bold" TextColor="#007ACC" VerticalOptions="Center"/>
+
+                                        <!-- 隱藏按鈕 -->
+                                        <Button Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Text="👁️‍🗨️" FontSize="12" Clicked="OnHideClicked" BackgroundColor="#f0f0f0" TextColor="Gray" Padding="10,0" HeightRequest="30" VerticalOptions="Center" CornerRadius="5"/>
+
+                                    </Grid>
+
+                                    <!-- 詳細資料區塊 -->
+                                    <Grid IsVisible="{Binding IsExpanded}" RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,*" RowSpacing="6" ColumnSpacing="15" Margin="0,10,0,0">
+
+                                        <Label Grid.Row="0" Grid.Column="0" Text="RSSI:" TextColor="Gray" FontSize="13" VerticalOptions="Center" />
+                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding Rssi, StringFormat='{0} dBm'}" TextColor="{Binding RssiColor}" FontAttributes="Bold" VerticalOptions="Center" />
+
+                                        <Label Grid.Row="1" Grid.Column="0" Text="Temp:" TextColor="Gray" FontSize="13" VerticalOptions="Center" />
+                                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding Temperature, StringFormat='{0} °C'}" TextColor="{Binding TempColor}" FontAttributes="Bold" VerticalOptions="Center" />
+
+                                        <Label Grid.Row="2" Grid.Column="0" Text="Battery:" TextColor="Gray" FontSize="13" VerticalOptions="Center" />
+                                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding Battery, StringFormat='{0} %'}" TextColor="{Binding BatteryColor}" FontAttributes="Bold" VerticalOptions="Center" />
+
+                                        <Label Grid.Row="3" Grid.Column="0" Text="Cable:" TextColor="Gray" FontSize="13" VerticalOptions="Center" />
+                                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding CableStatus}" TextColor="{Binding CableColor}" FontAttributes="Bold" VerticalOptions="Center" />
+
+                                        <Label Grid.Row="4" Grid.Column="0" Text="F/W Ver:" TextColor="Gray" FontSize="13" VerticalOptions="Center" />
+                                        <Label Grid.Row="4" Grid.Column="1" Text="{Binding FwVersion}" TextColor="{Binding FwVersionColor}" FontAttributes="Bold" VerticalOptions="Center" />
+
+                                    </Grid>
+                                </VerticalStackLayout>
+
+                                <!-- PASS/FAIL 顯示區 -->
+                                <Frame Grid.Column="1" BackgroundColor="{Binding PassFailColor}" CornerRadius="5" HasShadow="False" HeightRequest="45" Padding="0" VerticalOptions="Center">
+                                    <Label Text="{Binding PassFailText}" TextColor="White" FontAttributes="Bold" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Frame>
+                            </Grid>
+
+                            <!-- 被隱藏時的極簡畫面-->
+                            <Grid IsVisible="{Binding IsMuted}" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10" VerticalOptions="Center">
+                                <Label Grid.Column="0" Text="Hidden:" TextColor="LightGray" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="{Binding DeviceId}" FontAttributes="Bold" TextColor="LightGray" VerticalOptions="Center"/>
+                                <Label Grid.Column="2" Text="Tap to show" TextColor="LightGray" FontSize="12" VerticalOptions="Center"/>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- 底部按鈕區 -->
+        <VerticalStackLayout Grid.Row="2" Spacing="10" Margin="0,15,0,0">
+            <Button x:Name="BtnScan" Text="Start Scaning" Clicked="OnScanClicked" 
+                    BackgroundColor="#28a745" TextColor="White" CornerRadius="8" HeightRequest="50"/>
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>

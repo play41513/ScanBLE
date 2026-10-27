@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ScanBLE.SettingsPage"
+             Title="測試標準設定">
+
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="15">
+
+            <Label Text="1. 溫度範圍 (°C)" FontAttributes="Bold" />
+            <Grid ColumnDefinitions="*,auto,*" ColumnSpacing="10">
+                <Entry Grid.Column="0" x:Name="EntMinTemp" Keyboard="Numeric" Placeholder="最低溫" />
+                <Label Grid.Column="1" Text="~" VerticalOptions="Center" />
+                <Entry Grid.Column="2" x:Name="EntMaxTemp" Keyboard="Numeric" Placeholder="最高溫" />
+            </Grid>
+
+            <Label Text="2. 電量下限 (%)" FontAttributes="Bold" />
+            <Entry x:Name="EntMinBattery" Keyboard="Numeric" Placeholder="例如: 80" />
+
+            <Label Text="3. 韌體版本 (完全符合)" FontAttributes="Bold" />
+            <Entry x:Name="EntFwVersion" Placeholder="例如: 21" />
+
+            <Label Text="4. 訊號強度 (RSSI) PASS 範圍 (dBm)" FontAttributes="Bold" />
+            <Grid ColumnDefinitions="*,auto,*" ColumnSpacing="10">
+                <Entry Grid.Column="0" x:Name="EntMinRssi" Keyboard="Numeric" Placeholder="最弱 (例: -60)" />
+                <Label Grid.Column="1" Text="~" VerticalOptions="Center" />
+                <Entry Grid.Column="2" x:Name="EntMaxRssi" Keyboard="Numeric" Placeholder="最強 (例: -10)" />
+            </Grid>
+
+            <Label Text="5. 忽略訊號閾值 (低於此值不顯示)" FontAttributes="Bold" TextColor="DarkRed" />
+            <Entry x:Name="EntIgnoreRssi" Keyboard="Numeric" Placeholder="例如: -80" />
+
+            <Button Text="儲存設定" Clicked="OnSaveClicked" BackgroundColor="#007ACC" TextColor="White" Margin="0,20,0,0" HeightRequest="50" CornerRadius="8"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

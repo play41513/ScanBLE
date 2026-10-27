@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ScanBLE.HistoryPage"
+             Title="歷史紀錄">
+
+    <Grid RowDefinitions="Auto, Auto, *" Padding="20" RowSpacing="15">
+
+        <!-- 頂部日期選擇 -->
+        <HorizontalStackLayout Grid.Row="0" Spacing="10" VerticalOptions="Center">
+            <Label Text="選擇日期:" VerticalOptions="Center" FontAttributes="Bold"/>
+            <DatePicker x:Name="LogDatePicker" DateSelected="OnDateSelected" />
+            <ActivityIndicator x:Name="LoadingSpinner" IsRunning="False" IsVisible="False" VerticalOptions="Center" HeightRequest="20" WidthRequest="20"/>
+        </HorizontalStackLayout>
+
+        <!-- 搜尋列 -->
+        <Grid Grid.Row="1" ColumnDefinitions="*, Auto" ColumnSpacing="10">
+            <Entry Grid.Column="0" x:Name="SearchEntry" Placeholder="搜尋 ID (後 6 碼)" ReturnType="Search" Completed="OnSearchClicked"/>
+            <Button Grid.Column="1" Text="搜尋" Clicked="OnSearchClicked" BackgroundColor="#007ACC" TextColor="White"/>
+        </Grid>
+
+        <!-- 歷史紀錄列表 -->
+        <CollectionView Grid.Row="2" x:Name="HistoryListView" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="LightGray" CornerRadius="8" Padding="15" Margin="0,0,0,10">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnLogItemTapped" CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+
+                        <VerticalStackLayout Spacing="5">
+                            <Grid ColumnDefinitions="*, *, 80">
+                                <Label Grid.Column="0" Text="{Binding DisplayTime}" FontAttributes="Bold" TextColor="Gray" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="{Binding DisplayId}" FontAttributes="Bold" FontSize="16" VerticalOptions="Center"/>
+                                <Frame Grid.Column="2" BackgroundColor="{Binding StatusColor}" CornerRadius="5" HasShadow="False" HeightRequest="35" Padding="0">
+                                    <Label Text="{Binding Status}" TextColor="White" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Frame>
+                            </Grid>
+
+                            <!-- 展開後的檔案內容區塊 -->
+                            <StackLayout IsVisible="{Binding IsExpanded}" Margin="0,10,0,0">
+                                <BoxView HeightRequest="1" Color="LightGray" Margin="0,0,0,10" />
+                                <Label Text="{Binding CsvContent}" FontFamily="monospace" FontSize="12" TextColor="DarkSlateGray"/>
+                                <ActivityIndicator IsRunning="{Binding IsLoadingContent}" IsVisible="{Binding IsLoadingContent}" HeightRequest="20" HorizontalOptions="Center"/>
+                            </StackLayout>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

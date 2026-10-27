@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#20C8F4"/>
+      <stop offset="1" stop-color="#0757E8"/>
+    </linearGradient>
+    <linearGradient id="device" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#DCEEFF"/>
+    </linearGradient>
+  </defs>
+  <!-- Transparent background: foreground artwork only -->
+  <!-- Bluetooth scanning waves -->
+  <g fill="none" stroke="url(#blue)" stroke-width="5.5" stroke-linecap="round">
+    <path d="M28 19 C17 28 14 40 14 49 C14 58 17 70 28 79"/>
+    <path d="M39 28 C32 34 30 41 30 49 C30 57 32 64 39 70"/>
+    <path d="M100 19 C111 28 114 40 114 49 C114 58 111 70 100 79"/>
+    <path d="M89 28 C96 34 98 41 98 49 C98 57 96 64 89 70"/>
+  </g>
+  <!-- Bluetooth glyph -->
+  <path d="M59 7 L78 24 L64 37 L78 50 L59 67 L59 7 M59 37 L45 23 M59 37 L45 51"
+        fill="none" stroke="#0874EF" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Device tag -->
+  <path d="M24 76 Q24 70 31 70 H78 Q84 70 86 76 L94 98 Q96 104 89 104 H28 Q22 104 22 98 Z"
+        fill="url(#device)" stroke="#138DF0" stroke-width="2.5"/>
+  <rect x="43" y="75" width="20" height="3.5" rx="1.75" fill="#22BDF4"/>
+  <text x="58" y="94" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="800" fill="#0757D9">A2TB</text>
+  <!-- Search lens -->
+  <circle cx="88" cy="88" r="17" fill="#FFFFFF" stroke="#0874EF" stroke-width="4.5"/>
+  <circle cx="88" cy="88" r="11.5" fill="url(#blue)"/>
+  <path d="M100 101 L113 114" stroke="#0874EF" stroke-width="7" stroke-linecap="round"/>
+  <path d="M85 84 C86 81 89 79 92 79" fill="none" stroke="#7DEBFF" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
